@@ -1,0 +1,31 @@
+AI Fix Summary (allocator.cpp)
+
+Overview
+- This file documents the fixes applied to `allocator.cpp` to resolve failing free/coalescing/reuse tests and a segmentation fault.
+
+What Was Fixed
+1. `mm_init` double `mem_sbrk` call removed
+- Problem: `mm_init` called `mem_sbrk(4 * WSIZE)` twice, which incorrectly advanced the break and corrupted initial heap layout assumptions.
+- Fix: Keep a single `mem_sbrk` call and initialize padding/prologue/epilogue from that returned base.
+- Impact: Restores correct heap bootstrap and prevents early metadata corruption.
+
+2. `place` now writes allocated footers
+- Problem: `place()` wrote allocated headers but did not reliably write allocated footers in both split and no-split paths.
+- Fix: Write footer with allocated bit in both branches:
+  - Split path: footer for allocated front block.
+  - No-split path: footer for entire allocated block.
+- Impact: Coalescing logic that relies on previous block footer becomes reliable; prevents incorrect neighbor detection and crashes.
+
+3. `coalesce` now reinserts merged blocks in all merge cases
+- Problem: Coalesced blocks in case 2/3/4 were not always added back to the explicit free list.
+- Fix: After merge logic in each non-trivial case, call `add_to_free_list(bp)` and return immediately.
+- Impact: Freed memory is reusable, and allocator avoids unnecessary heap growth.
+
+4. `remove_from_free_list` now updates backward links
+- Problem: Unlinking only updated `prev->next`/head, but did not always set `next->prev`.
+- Fix: Added `if (next != nullptr) SET_PREV_FREE(next, prev);`.
+- Impact: Maintains doubly-linked free-list integrity; prevents list corruption during future operations.
+
+Notes
+- No API/signature changes were made.
+- Fixes were limited to allocator correctness in free-list maintenance and block metadata updates.
