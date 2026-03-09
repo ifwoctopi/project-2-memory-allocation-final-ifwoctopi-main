@@ -1,0 +1,214 @@
+{
+  "tests": [
+    {
+      "name": "Build",
+      "setup": "",
+      "run": "make",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 60,
+      "points": 0
+    },
+    {
+      "name": "Test 1: Single allocation",
+      "setup": "make",
+      "run": "./test_final 1",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 2: Multiple small allocations",
+      "setup": "make",
+      "run": "./test_final 2",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 3: Various allocation sizes",
+      "setup": "make",
+      "run": "./test_final 3",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 4: Large allocation (1 MB)",
+      "setup": "make",
+      "run": "./test_final 4",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 5: Zero-size allocation returns nullptr",
+      "setup": "make",
+      "run": "./test_final 5",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 6: Sequential allocations (100 blocks)",
+      "setup": "make",
+      "run": "./test_final 6",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 7: Alternating small and large allocations",
+      "setup": "make",
+      "run": "./test_final 7",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 8: Very large allocation (4 MB)",
+      "setup": "make",
+      "run": "./test_final 8",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 9: Basic free does not crash",
+      "setup": "make",
+      "run": "./test_final 9",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 10: Freed block is reused",
+      "setup": "make",
+      "run": "./test_final 10",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 11: Free N then reallocate N",
+      "setup": "make",
+      "run": "./test_final 11",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 12: Backward coalescing",
+      "setup": "make",
+      "run": "./test_final 12",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 6
+    },
+    {
+      "name": "Test 13: Forward coalescing",
+      "setup": "make",
+      "run": "./test_final 13",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 6
+    },
+    {
+      "name": "Test 14: Bidirectional coalescing",
+      "setup": "make",
+      "run": "./test_final 14",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 6
+    },
+    {
+      "name": "Test 15: free(nullptr) is a no-op",
+      "setup": "make",
+      "run": "./test_final 15",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 16: Alternating malloc/free (50 iterations)",
+      "setup": "make",
+      "run": "./test_final 16",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 17: Interleaved alloc/free with integrity",
+      "setup": "make",
+      "run": "./test_final 17",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 18: Binary-tree allocation pattern",
+      "setup": "make",
+      "run": "./test_final 18",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 4
+    },
+    {
+      "name": "Test 19: Heap utilization >= 60%",
+      "setup": "make",
+      "run": "./test_final 19",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 11
+    },
+    {
+      "name": "Test 20: Throughput >= 1000 Kops/sec",
+      "setup": "make",
+      "run": "./test_final 20",
+      "input": "",
+      "output": "PASS",
+      "comparison": "included",
+      "timeout": 30,
+      "points": 11
+    }
+  ]
+}

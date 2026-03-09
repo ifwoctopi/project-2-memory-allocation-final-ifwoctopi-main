@@ -1,0 +1,24 @@
+name: GitHub Classroom Autograding
+
+# Runs on every push so students get immediate feedback
+on: [push]
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    name: Run Autograding Tests
+    runs-on: ubuntu-latest
+
+    # Skip the bot's own initial commit when the repo is created
+    if: github.actor != 'github-classroom[bot]'
+
+    steps:
+      - name: Checkout student code
+        uses: actions/checkout@v4
+
+      - name: Run autograding
+        uses: education/autograding@v1
