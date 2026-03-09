@@ -190,9 +190,6 @@ int mm_init(void)
 
     /* TODO: Remove this line and return 0 once fully implemented */
 
-    // Setting up heap
-
-    heap_listp = (char *)mem_sbrk(4 * WSIZE);
     if ((heap_listp = (char *)mem_sbrk(4 * WSIZE)) == (char *)-1)
         return -1;
     PUT(heap_listp, 0);                          // padding
@@ -422,6 +419,8 @@ static void *coalesce(void *bp)
         size += next_size;
         PUT(HDRP(bp), PACK(size, 0));
         PUT(FTRP(bp), PACK(size, 0));
+        add_to_free_list(bp);
+        return bp;
     }
 
     /* TODO: Case 3 -- merge with prev */
@@ -434,6 +433,8 @@ static void *coalesce(void *bp)
         PUT(HDRP(prev_bp), PACK(size, 0));
         PUT(FTRP(bp), PACK(size, 0));
         bp = prev_bp;
+        add_to_free_list(bp);
+        return bp;
     }
     /* IMPORTANT: Save PREV_BLKP(bp) before writing anything. PREV_BLKP reads  */
     /* bp's footer to find the previous block; once we write to FTRP(bp) that   */
@@ -457,6 +458,8 @@ static void *coalesce(void *bp)
         PUT(HDRP(prev_bp), PACK(size, 0));
         PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 0));
         bp = prev_bp;
+        add_to_free_list(bp);
+        return bp;
     }
     /* Combine the logic from cases 2 and 3:                           */
     /* - Save next_size and prev_bp before any writes                  */
@@ -523,6 +526,7 @@ static void place(void *bp, size_t asize)
     if ((csize - asize) >= MIN_BLOCK_SIZE)
     {
         PUT(HDRP(bp), PACK(asize, 1));
+        PUT(FTRP(bp), PACK(asize, 1));
         void *next_bp = NEXT_BLKP(bp);
         PUT(HDRP(next_bp), PACK(csize - asize, 0));
         PUT(FTRP(next_bp), PACK(csize - asize, 0));
@@ -531,6 +535,7 @@ static void place(void *bp, size_t asize)
     else
     {
         PUT(HDRP(bp), PACK(csize, 1));
+        PUT(FTRP(bp), PACK(csize, 1));
     }
 }
 
@@ -586,6 +591,10 @@ static void remove_from_free_list(void *bp)
     else
     {
         SET_NEXT_FREE(prev, next);
+    }
+    if (next != nullptr)
+    {
+        SET_PREV_FREE(next, prev);
     }
 }
 
